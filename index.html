@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rick And Morty Encyclopedia Project</title>
+        <script src="index.js" defer></script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header style='text-align:center'>
+            <img src="https://upload.wikimedia.org/wikipedia/en/c/c8/Rick_and_Morty_logo.png" alt="Rick and Morty logo.png" class='logo'>
+            <h2>The Rick and Morty Encyclopedia</h2>
+        </header>
+        <div>
+            <form class = 'search-bar' style='text-align:center'>
+                <input type='text' id='name-input' name='name=of-char' placeholder='Enter charatcer name:'>
+                <input type='button' id='search-button' value='Search'>
+            </form>
+        </div>
+        <div class='container'>
+            <ul id='character-list'>
+                <div class='frame'>
+                    <div class='image'>
+                        <img id='char-pic'>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </body>
+</html>
