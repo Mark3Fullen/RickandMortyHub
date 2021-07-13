@@ -48,3 +48,8 @@ aside{
     flex-direction: row;
     justify-content: space-between;
   }
+
+#mainCharList {
+    float: left;
+    position: relative;
+}
