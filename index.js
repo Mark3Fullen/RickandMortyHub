@@ -127,14 +127,16 @@ function characterDetail(char){
     infoMain.append(locationName, info, episodes)
     infoContainer.append(infoAside, infoMain)
 }
+
 function renderAsideBar(data) {
-    for (i=0; i<19; i++) {
+    for (let i=0; i<19; i++) {
         const mainCharLi = document.createElement('li')
         mainCharLi.textContent = data[i].name
         mainCharLi.class = 'mainChar'
         document.querySelector('#mainCharList').append(mainCharLi)
         mainCharLi.addEventListener('click', (e) => {
-            console.log(e.target)
+            document.querySelector('.info-container').innerHTML = ''
+            showCharacterDetail(data[i].id)
         })
     }
 }
@@ -228,6 +230,7 @@ function renderEpisodes(episode){
             })
         })
     }
+}
 
     function searchForCharacter () {
         document.querySelector('#char-form').addEventListener('submit', e => {
