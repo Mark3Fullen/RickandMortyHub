@@ -64,28 +64,37 @@ function characterDetail(char){
     let infoAside = document.createElement('aside')
     let infoMain = document.createElement('main')
     let name = document.createElement('h3')
+    let statusDiv = document.createElement('div')
     let status = document.createElement('h3')
+    let statusButton = document.createElement('button')
     let img = document.createElement('img')
     let locationName = document.createElement('p')
     let info = document.createElement('div')
     let gender = document.createElement('p')
     let species = document.createElement('p')
-    let episodes = document.createElement('div')
-    let episodeNames =  document.createElement('p')
+    let episodes = document.createElement('ul')
     let commentForm = document.createElement('form')
 
+    statusDiv.className = 'spoiler'
     name.textContent = char.name
     img.src = char.image
-    status.textContent = char.status
+    status.textContent = `Status: ${char.status}`
+    statusButton.textContent = 'Show Spoiler'
+    statusButton.id = 'spoilerButton'
+    revealSpoiler(statusButton)
     locationName.textContent = `Location: ${char.location.name}`
     gender.textContent = `Gender: ${char.gender}`
     species.textContent = `Species: ${char.species}`
     episodes.textContent = 'Episodes seen in:'
+    episodes.className = 'episode-list'
     console.log(char.episode)
-    episodeNames.textContent = char.episode
+    renderEpisodes(char.episode)
     // need to render episodes onto page
     
-    infoAside.append(name, img, status)
+
+    statusDiv.append(status)
+    statusButton.append(statusDiv)
+    infoAside.append(name, img, statusButton)
     info.append(gender, species)
     if (char.type !== "") {
         let type = document.createElement('p')
@@ -96,3 +105,26 @@ function characterDetail(char){
     infoContainer.append(infoAside, infoMain, commentForm)
 
 }
+
+function revealSpoiler(statusButton){
+    statusButton.addEventListener('click', () => {
+        let spoilerButton = document.querySelector('.spoiler')
+        if (spoilerButton.style.display === 'none') {
+            spoilerButton.style.display = 'block';
+        } else {
+            spoilerButton.style.display = 'none';
+        }
+    })
+}
+
+function renderEpisodes(episode){
+    for (let i=0; i<5; i++){
+        fetch(episode[i])
+        .then(res => res.json())
+        .then(json => {
+            let episodeList = document.querySelector('.episode-list')
+            let episodeName = document.createElement('li')
+            episodeName.textContent = json.name
+            episodeList.append(episodeName)
+        })
+}}
