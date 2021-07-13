@@ -89,8 +89,6 @@ function characterDetail(char){
     episodes.className = 'episode-list'
     console.log(char.episode)
     renderEpisodes(char.episode)
-    // need to render episodes onto page
-    
 
     statusDiv.append(status)
     statusButton.append(statusDiv)
@@ -118,6 +116,7 @@ function revealSpoiler(statusButton){
 }
 
 function renderEpisodes(episode){
+    // if statement to run for loop only if multiple episodes
     for (let i=0; i<5; i++){
         fetch(episode[i])
         .then(res => res.json())
