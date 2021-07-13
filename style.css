@@ -30,6 +30,7 @@ img.logo {
 
 #character-name{
     text-align: center;
+    margin-bottom: 3px;
 }
 
 main{
@@ -39,6 +40,17 @@ main{
 
 aside{
     padding: 0;
+    background: black;
+    color: green;
+    text-align: center;
+}
+
+aside h3{
+    margin: 3px;
+}
+
+aside img{
+    margin: 10px;
 }
 
 .info-container {
@@ -47,4 +59,13 @@ aside{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-  }
+}
+
+main{
+    background:black;
+    color: green;
+}
+
+.spoiler{
+    display: none;
+}
