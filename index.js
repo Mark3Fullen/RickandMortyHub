@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderCharacters(data){
         data.forEach(renderCharacter);
-        renderAsideBar(data);
     }
 
 function fetchRandoChar() {
@@ -229,4 +228,17 @@ function renderEpisodes(episode){
             })
         })
     }
-}
+
+    function searchForCharacter () {
+        document.querySelector('#char-form').addEventListener('submit', e => {
+            document.querySelector('div.card-container').innerHTML = ''
+            e.preventDefault();
+            let character = e.target.nameOfChar.value;
+            console.log(character)
+            fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
+            .then(resp => resp.json())
+            .then(json => {
+                renderCharacters(json.results)
+            })
+        })
+    }
