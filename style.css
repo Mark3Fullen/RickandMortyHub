@@ -4,17 +4,24 @@ img.logo {
 }
 
 .container {
-    
+    width: 1500 px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.card {
+    float: left;
+    width: 350px;
 }
 
 .frame {
-
-}
-
-.image {
-
+    width: 330px;
+    margin: 15px;
+    background: black;
+    color: green;
 }
 
 #char-pic {
-    
+    width: 300px;
+    margin: auto;
 }
