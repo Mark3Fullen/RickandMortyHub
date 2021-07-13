@@ -62,43 +62,50 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    function characterDetail(char){
-        let infoContainer = document.querySelector('.info-container')
-        let infoAside = document.createElement('aside')
-        let infoMain = document.createElement('main')
-        let name = document.createElement('h3')
-        let status = document.createElement('h3')
-        let img = document.createElement('img')
-        let locationName = document.createElement('p')
-        let info = document.createElement('div')
-        let gender = document.createElement('p')
-        let species = document.createElement('p')
-        let episodes = document.createElement('div')
-        let episodeNames =  document.createElement('p')
-        let commentForm = document.createElement('form')
+function characterDetail(char) {
+    console.log(char)
+    let infoContainer = document.querySelector('.info-container')
+    let infoAside = document.createElement('aside')
+    let infoMain = document.createElement('main')
+    let name = document.createElement('h3')
+    let statusDiv = document.createElement('div')
+    let status = document.createElement('h3')
+    let statusButton = document.createElement('button')
+    let img = document.createElement('img')
+    let locationName = document.createElement('p')
+    let info = document.createElement('div')
+    let gender = document.createElement('p')
+    let species = document.createElement('p')
+    let episodes = document.createElement('ul')
+    let commentForm = document.createElement('form')
 
-        name.textContent = char.name
-        img.src = char.image
-        status.textContent = char.status
-        locationName.textContent = `Location: ${char.location.name}`
-        gender.textContent = `Gender: ${char.gender}`
-        species.textContent = `Species: ${char.species}`
-        episodes.textContent = 'Episodes seen in:'
-        console.log(char.episode)
-        episodeNames.textContent = char.episode
-        // need to render episodes onto page
-        
-        infoAside.append(name, img, status)
-        info.append(gender, species)
-        if (char.type !== "") {
-            let type = document.createElement('p')
-            type.textContent = `Type: ${char.type}`
-            info.append(gender, species, type)
-        }
-        infoMain.append(locationName, info, episodes)
-        infoContainer.append(infoAside, infoMain, commentForm)
+    statusDiv.className = 'spoiler'
+    name.textContent = char.name
+    img.src = char.image
+    status.textContent = `Status: ${char.status}`
+    statusButton.textContent = 'Show Spoiler'
+    statusButton.id = 'spoilerButton'
+    revealSpoiler(statusButton)
+    locationName.textContent = `Location: ${char.location.name}`
+    gender.textContent = `Gender: ${char.gender}`
+    species.textContent = `Species: ${char.species}`
+    episodes.textContent = 'Episodes seen in:'
+    episodes.className = 'episode-list'
+    console.log(char.episode)
+    renderEpisodes(char.episode)
 
+    statusDiv.append(status)
+    statusButton.append(statusDiv)
+    infoAside.append(name, img, statusButton)
+    info.append(gender, species)
+    if (char.type !== "") {
+        let type = document.createElement('p')
+        type.textContent = `Type: ${char.type}`
+        info.append(gender, species, type)
     }
+    infoMain.append(locationName, info, episodes)
+    infoContainer.append(infoAside, infoMain, commentForm)
+}
 
     function renderAsideBar() {
         fetch('https://rickandmortyapi.com/api/character/')
@@ -117,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function searchForCharacter () {
         document.querySelector('#char-form').addEventListener('submit', e => {
             document.querySelector('div.card-container').innerHTML = ''
+            document.querySelector('div.info-container').innerHTML = ''
             e.preventDefault();
             let character = e.target.nameOfChar.value;
             console.log(character)
@@ -127,3 +135,51 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
+// function renderAsideBar(data) {
+//     for (let i=0; i<19; i++) {
+//         const mainCharLi = document.createElement('li')
+//         mainCharLi.textContent = data[i].name
+//         mainCharLi.class = 'mainChar'
+//         document.querySelector('#mainCharList').append(mainCharLi)
+//         mainCharLi.addEventListener('click', (e) => {
+//             document.querySelector('.info-container').innerHTML = ''
+//             showCharacterDetail(data[i].id)
+//         })
+//     }
+// }
+
+function revealSpoiler(statusButton){
+    statusButton.addEventListener('click', () => {
+        let spoilerButton = document.querySelector('.spoiler')
+        if (spoilerButton.style.display === 'none') {
+            spoilerButton.style.display = 'block';
+        } else {
+            spoilerButton.style.display = 'none';
+        }
+    })
+}
+
+function renderEpisodes(episode){
+    if (episode.length > 5){
+        for (let i=0; i<5; i++){
+            fetch(episode[i])
+            .then(res => res.json())
+            .then(json => {
+                let episodeName = document.createElement('li')
+                episodeName.textContent = json.name
+                document.querySelector('.episode-list').append(episodeName)
+            })
+        }
+    } else {
+        episode.forEach(currentEp => {
+            fetch(currentEp)
+            .then(res => res.json())
+            .then(json => {
+                let episodeList = document.querySelector('.episode-list')
+                let episodeName = document.createElement('li')
+                episodeName.textContent = json.name
+                episodeList.append(episodeName)
+            })
+        })
+    }
+}
