@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gender.textContent = `Gender: ${char.gender}`
         species.textContent = `Species: ${char.species}`
         episodes.textContent = 'Episodes seen in:'
-        console.log(char.episode)
+        // console.log(char.episode)
         episodeNames.textContent = char.episode
         // need to render episodes onto page
         
@@ -100,13 +100,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 function renderAsideBar(data) {
-    for (i=0; i<19; i++) {
+    for (let i=0; i<19; i++) {
         const mainCharLi = document.createElement('li')
         mainCharLi.textContent = data[i].name
         mainCharLi.class = 'mainChar'
         document.querySelector('#mainCharList').append(mainCharLi)
         mainCharLi.addEventListener('click', (e) => {
-            console.log(e.target)
+            document.querySelector('.info-container').innerHTML = ''
+            showCharacterDetail(data[i].id)
         })
     }
 }
