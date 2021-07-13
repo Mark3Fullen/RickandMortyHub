@@ -25,3 +25,7 @@ img.logo {
     width: 300px;
     margin: auto;
 }
+
+#character-name{
+    text-align: center;
+}
