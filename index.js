@@ -14,9 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
 //     .then(json => renderCharacters(json.results))
 // }
 
-function renderCharacters(data){
-    data.forEach(renderCharacter);
-}
+    function renderCharacters(data){
+        data.forEach(renderCharacter);
+        renderAsideBar(data);
+    }
 
 function fetchRandoChar() {
     for (i=0; i<20; i++) {
@@ -39,29 +40,29 @@ function renderCharacter(data) {
     // let characterUl = document.querySelector('#character-list')
     // let characterLi = document.createElement('li')
 
-    card.className = 'card'
-    frame.className = 'frame'
-    img.id = 'char-pic'
-    characterName.id = 'character-name'
+        card.className = 'card'
+        frame.className = 'frame'
+        img.id = 'char-pic'
+        characterName.id = 'character-name'
 
-    img.src = data.image
-    characterName.textContent = data.name
+        img.src = data.image
+        characterName.textContent = data.name
 
-    // characterUl.append(characterLi)
-    frame.append(characterName, img)
-    card.append(frame)
-    container.append(card)
+        // characterUl.append(characterLi)
+        frame.append(characterName, img)
+        card.append(frame)
+        container.append(card)
 
-    card.addEventListener('click', () => showCharacterDetail(data.id))
+        card.addEventListener('click', () => showCharacterDetail(data.id))
 
-}
+    }
 
-function returnToPage(){
-    let title = document.querySelector('.logo')
-    title.addEventListener('click', () => {
-        window.location.reload()
-    })
-}
+    function returnToPage(){
+        let title = document.querySelector('.logo')
+        title.addEventListener('click', () => {
+            window.location.reload()
+        })
+    }
 
 function showCharacterDetail(id){
     console.log(id)
@@ -126,7 +127,17 @@ function characterDetail(char){
     }
     infoMain.append(locationName, info, episodes)
     infoContainer.append(infoAside, infoMain)
-
+}
+function renderAsideBar(data) {
+    for (i=0; i<19; i++) {
+        const mainCharLi = document.createElement('li')
+        mainCharLi.textContent = data[i].name
+        mainCharLi.class = 'mainChar'
+        document.querySelector('#mainCharList').append(mainCharLi)
+        mainCharLi.addEventListener('click', (e) => {
+            console.log(e.target)
+        })
+    }
 }
 
 function fetchRandoLocation() {
