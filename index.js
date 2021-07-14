@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Bruh Moment")
     returnToPage();
     searchForCharacter();
+    // searchForCharacter();
+    // renderAsideBar();
     fetchRandoChar();
     fetchRandoLocation();
 })
@@ -55,6 +57,7 @@ function showCharacterDetail(id){
     .then(res => res.json())
     .then(json => {
         document.querySelector('#mainpage').innerHTML = '';
+        document.querySelector('#locationDetailPage').innerHTML = '';
         characterDetail(json)
     })
 }
@@ -96,6 +99,7 @@ function characterDetail(char) {
     console.log(char.episode)
     renderEpisodes(char.episode)
 
+
     statusDiv.append(status)
     statusButton.append(statusDiv)
     infoAside.append(name, img, statusButton)
@@ -114,8 +118,6 @@ function characterDetail(char) {
     infoMain.append(locationName, info, episodes)
     infoContainer.append(infoAside, infoMain)
 
-}
-
 function fetchRandoLocation() {
     for (i=0; i<10; i++) {
         id = Math.floor(Math.random() * 108)
@@ -124,16 +126,63 @@ function fetchRandoLocation() {
         .then(data => {
             const mainLocLi = document.createElement('li')
             mainLocLi.textContent = data.name
-            console.log(data.name)
             mainLocLi.className = 'mainLoc'
             document.querySelector('#mainLocationList').append(mainLocLi)
-            mainLocLi.addEventListener('click', (e) => {
-                console.log(e.target)
-                
+            mainLocLi.addEventListener('click', () => {
+                document.querySelector('#mainpage').innerHTML = '';
+                renderLocDetails(data);
+                // figure out how to filter when clicked
             })
         })
     }
 }
+
+function renderLocDetails(data) {
+    const residents = data.residents;
+    let locDiv = document.createElement('div')
+    let location = document.createElement('h1')
+    let locationSpan = document.createElement('span')
+    let mainDiv = document.createElement('div')
+    mainDiv.className = 'card-container'
+    console.log(data.name)
+    locationSpan.textContent = `Characters Seen on ${data.name}`
+    location.style.textAlign = 'center'
+    location.append(locationSpan)
+    locDiv.append(location)
+    document.querySelector('#locationDetailPage').append(locDiv, mainDiv)
+
+    if(residents.length === 0) {
+        locationSpan.textContent = `No characters on ${data.name}. Please select a different location.`
+    }
+
+    residents.forEach(resident => {
+        fetch(resident)
+        .then(resp => resp.json())
+        .then(data => {
+            console.log(data)
+            renderCharacter(data)
+        })
+    })
+
+    locDiv.className = 'location-div'
+}
+
+// function renderAsideBar() {
+//     fetch('https://rickandmortyapi.com/api/location/')
+//     .then(resp => resp.json())
+//     .then(data => {
+//         for(let i=0; i<10;  i++){
+//             const mainLocLi = document.createElement('li')
+//             mainLocLi.textContent = data.results[i].name
+//             console.log(data.results[i].name)
+//             mainLocLi.className = 'mainLoc'
+//             document.querySelector('#mainLocationList').append(mainLocLi)
+//             mainLocLi.addEventListener('click', (e) => {
+//                 console.log(e.target)
+//             })
+//         }
+//     })
+// }
 
 function searchForCharacter () {
     document.querySelector('#char-form').addEventListener('submit', e => {
@@ -141,12 +190,15 @@ function searchForCharacter () {
         document.querySelector('div.info-container').innerHTML = ''
         e.preventDefault();
         let character = e.target.nameOfChar.value;
+        debugger
         console.log(character)
+        debugger
         fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
         .then(resp => resp.json())
         .then(json => {
             renderCharacters(json.results)
         })
+        document.querySelector('#char-form').reset();
     })
 }
 
@@ -190,16 +242,16 @@ function renderEpisodes(episode){
     }
 }
 
-    function searchForCharacter () {
-        document.querySelector('#char-form').addEventListener('submit', e => {
-            document.querySelector('div.card-container').innerHTML = ''
-            e.preventDefault();
-            let character = e.target.nameOfChar.value;
-            console.log(character)
-            fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
-            .then(resp => resp.json())
-            .then(json => {
-                renderCharacters(json.results)
-            })
-        })
-    }
+// function searchForCharacter () {
+//     document.querySelector('#char-form').addEventListener('submit', e => {
+//         document.querySelector('div.card-container').innerHTML = ''
+//         e.preventDefault();
+//         let character = e.target.nameOfChar.value;
+//         console.log(character)
+//         fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
+//         .then(resp => resp.json())
+//         .then(json => {
+//             renderCharacters(json.results)
+//         })
+//     })
+// }
