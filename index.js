@@ -1,18 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Bruh Moment")
-    fetchAPI(); returnToPage()
+    // fetchAPI(); 
+    returnToPage();
+    searchForCharacter();
+    // renderAsideBar();
+    fetchRandoChar();
 })
 
-function fetchAPI() {
-    fetch('https://rickandmortyapi.com/api/character/')
-    .then(res => res.json())
-    .then(json => renderCharacters(json.results))
-}
+// function fetchAPI() {
+//     fetch('https://rickandmortyapi.com/api/character/')
+//     .then(res => res.json())
+//     .then(json => renderCharacters(json.results))
+// }
 
 function renderCharacters(data){
     data.forEach(renderCharacter);
 }
 
+function fetchRandoChar() {
+    for (i=0; i<20; i++) {
+        id = Math.floor(Math.random() * 672)
+        fetch(`https://rickandmortyapi.com/api/character/${id}`)
+        .then(res => res.json())
+        .then(renderCharacter)
+    }
+}
 function renderCharacter(data) {
     let container = document.querySelector('.card-container')
     // let card = document.querySelector('.card')
@@ -89,6 +101,8 @@ function characterDetail(char){
     episodes.className = 'episode-list'
     console.log(char.episode)
     renderEpisodes(char.episode)
+    // need to render episodes onto page
+    
 
     statusDiv.append(status)
     statusButton.append(statusDiv)
@@ -104,6 +118,35 @@ function characterDetail(char){
 
 }
 
+// function renderAsideBar() {
+//     fetch('https://rickandmortyapi.com/api/character/')
+//     .then(resp => resp.json())
+//     .then(data => data.results.forEach( data => {
+//         const mainCharLi = document.createElement('li')
+//         mainCharLi.textContent = data.name
+//         mainCharLi.class = 'mainChar'
+//         document.querySelector('#mainCharList').append(mainCharLi)
+//         mainCharLi.addEventListener('click', (e) => {
+//             console.log(e.target)
+//         })
+//     }))
+// }
+
+function searchForCharacter () {
+    document.querySelector('#char-form').addEventListener('submit', e => {
+        document.querySelector('div.card-container').innerHTML = ''
+        document.querySelector('div.info-container').innerHTML = ''
+        e.preventDefault();
+        let character = e.target.nameOfChar.value;
+        console.log(character)
+        fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
+        .then(resp => resp.json())
+        .then(json => {
+            renderCharacters(json.results)
+        })
+    })
+}
+
 function revealSpoiler(statusButton){
     statusButton.addEventListener('click', () => {
         let spoilerButton = document.querySelector('.spoiler')
@@ -116,14 +159,26 @@ function revealSpoiler(statusButton){
 }
 
 function renderEpisodes(episode){
-    // if statement to run for loop only if multiple episodes
-    for (let i=0; i<5; i++){
-        fetch(episode[i])
-        .then(res => res.json())
-        .then(json => {
-            let episodeList = document.querySelector('.episode-list')
-            let episodeName = document.createElement('li')
-            episodeName.textContent = json.name
-            episodeList.append(episodeName)
+    if (episode.length > 5){
+        for (let i=0; i<5; i++){
+            fetch(episode[i])
+            .then(res => res.json())
+            .then(json => {
+                let episodeName = document.createElement('li')
+                episodeName.textContent = json.name
+                document.querySelector('.episode-list').append(episodeName)
+            })
+        }
+    } else {
+        episode.forEach(currentEp => {
+            fetch(currentEp)
+            .then(res => res.json())
+            .then(json => {
+                let episodeList = document.querySelector('.episode-list')
+                let episodeName = document.createElement('li')
+                episodeName.textContent = json.name
+                episodeList.append(episodeName)
+            })
         })
-}}
+    }
+}
