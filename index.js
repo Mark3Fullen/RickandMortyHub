@@ -1,19 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Bruh Moment")
-    fetchAPI();
+    // fetchAPI();
+    fetchRandoChar();
     returnToPage();
     searchForCharacter();
     renderAsideBar();
 })
 
-    function fetchAPI() {
-        fetch('https://rickandmortyapi.com/api/character/')
-        .then(res => res.json())
-        .then(json => renderCharacters(json.results))
-    }
+    // function fetchAPI() {
+    //     fetch('https://rickandmortyapi.com/api/character/')
+    //     .then(res => res.json())
+    //     .then(json => renderCharacters(json.results))
+    // }
 
-    function renderCharacters(data){
-        data.forEach(renderCharacter);
+    // function renderCharacters(data){
+    //     data.forEach(renderCharacter);
+    //     console.log(data)
+    //     // for (let i=0; i<19; i++) {
+    //     //     num = Math.floor(Math.random() * 200)
+    //     //     renderCharacter(data[num])
+    //     // }
+    // }
+
+    function fetchRandoChar() {
+        for (i=0; i<19; i++) {
+            id = Math.floor(Math.random() * 672)
+            fetch(`https://rickandmortyapi.com/api/character/${id}`)
+            .then(res => res.json())
+            .then(renderCharacter)
+        }
     }
 
     function renderCharacter(data) {
