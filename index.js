@@ -1,18 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Bruh Moment")
-    // fetchAPI();
     returnToPage();
     searchForCharacter();
-    // renderAsideBar();
     fetchRandoChar();
     fetchRandoLocation();
 })
-
-// function fetchAPI() {
-//     fetch('https://rickandmortyapi.com/api/character/')
-//     .then(res => res.json())
-//     .then(json => renderCharacters(json.results))
-// }
 
     function renderCharacters(data){
         data.forEach(renderCharacter);
@@ -29,15 +21,10 @@ function fetchRandoChar() {
 
 function renderCharacter(data) {
     let container = document.querySelector('.card-container')
-    // let card = document.querySelector('.card')
-    // let frame = document.querySelector('.frame')
-    // let img = document.querySelector('#char-pic')
     let card = document.createElement('div')
     let frame = document.createElement('div')
     let img = document.createElement('img')
     let characterName = document.createElement('h2')
-    // let characterUl = document.querySelector('#character-list')
-    // let characterLi = document.createElement('li')
 
         card.className = 'card'
         frame.className = 'frame'
@@ -142,28 +129,11 @@ function fetchRandoLocation() {
             document.querySelector('#mainLocationList').append(mainLocLi)
             mainLocLi.addEventListener('click', (e) => {
                 console.log(e.target)
-                // figure out how to filter when clicked
+                
             })
         })
     }
 }
-
-// function renderAsideBar() {
-//     fetch('https://rickandmortyapi.com/api/location/')
-//     .then(resp => resp.json())
-//     .then(data => {
-//         for(let i=0; i<10;  i++){
-//             const mainLocLi = document.createElement('li')
-//             mainLocLi.textContent = data.results[i].name
-//             console.log(data.results[i].name)
-//             mainLocLi.className = 'mainLoc'
-//             document.querySelector('#mainLocationList').append(mainLocLi)
-//             mainLocLi.addEventListener('click', (e) => {
-//                 console.log(e.target)
-//             })
-//         }
-//     })
-// }
 
 function searchForCharacter () {
     document.querySelector('#char-form').addEventListener('submit', e => {
