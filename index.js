@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchForCharacter();
     // renderAsideBar();
     fetchRandoChar();
+    fetchRandoLocation();
 })
 
 // function fetchAPI() {
@@ -25,6 +26,7 @@ function fetchRandoChar() {
         .then(renderCharacter)
     }
 }
+
 function renderCharacter(data) {
     let container = document.querySelector('.card-container')
     // let card = document.querySelector('.card')
@@ -66,7 +68,7 @@ function showCharacterDetail(id){
     fetch(`https://rickandmortyapi.com/api/character/${id}`)
     .then(res => res.json())
     .then(json => {
-        document.querySelector('.card-container').innerHTML = '';
+        document.querySelector('#mainpage').innerHTML = '';
         characterDetail(json)
     })
 }
@@ -80,12 +82,15 @@ function characterDetail(char){
     let status = document.createElement('h3')
     let statusButton = document.createElement('button')
     let img = document.createElement('img')
-    let locationName = document.createElement('p')
     let info = document.createElement('div')
+    let locationName = document.createElement('p')
+    let locationSpan = document.createElement('span')
     let gender = document.createElement('p')
+    let genderSpan = document.createElement('span')
     let species = document.createElement('p')
+    let speciesSpan = document.createElement('span')
     let episodes = document.createElement('ul')
-    let commentForm = document.createElement('form')
+    let episodesSpan = document.createElement('span')
 
     statusDiv.className = 'spoiler'
     name.textContent = char.name
@@ -94,42 +99,70 @@ function characterDetail(char){
     statusButton.textContent = 'Show Spoiler'
     statusButton.id = 'spoilerButton'
     revealSpoiler(statusButton)
-    locationName.textContent = `Location: ${char.location.name}`
-    gender.textContent = `Gender: ${char.gender}`
-    species.textContent = `Species: ${char.species}`
-    episodes.textContent = 'Episodes seen in:'
+    locationSpan.textContent = `Location: ${char.location.name}`
+    genderSpan.textContent = `Gender: ${char.gender}`
+    speciesSpan.textContent = `Species: ${char.species}`
+    episodesSpan.textContent = 'Episodes seen in:'
     episodes.className = 'episode-list'
+    infoAside.className = 'info-list'
+    infoMain.className = 'info-main'
     console.log(char.episode)
     renderEpisodes(char.episode)
-    // need to render episodes onto page
-    
 
     statusDiv.append(status)
     statusButton.append(statusDiv)
     infoAside.append(name, img, statusButton)
+    gender.append(genderSpan)
+    species.append(speciesSpan)
+    locationName.append(locationSpan)
+    episodes.append(episodesSpan)
     info.append(gender, species)
     if (char.type !== "") {
         let type = document.createElement('p')
-        type.textContent = `Type: ${char.type}`
+        let typeSpan = document.createElement('span')
+        typeSpan.textContent = `Type: ${char.type}`
+        type.append(typeSpan)
         info.append(gender, species, type)
     }
     infoMain.append(locationName, info, episodes)
-    infoContainer.append(infoAside, infoMain, commentForm)
+    infoContainer.append(infoAside, infoMain)
 
 }
 
+function fetchRandoLocation() {
+    for (i=0; i<10; i++) {
+        id = Math.floor(Math.random() * 108)
+        fetch(`https://rickandmortyapi.com/api/location/${id}`)
+        .then(res => res.json())
+        .then(data => {
+            const mainLocLi = document.createElement('li')
+            mainLocLi.textContent = data.name
+            console.log(data.name)
+            mainLocLi.className = 'mainLoc'
+            document.querySelector('#mainLocationList').append(mainLocLi)
+            mainLocLi.addEventListener('click', (e) => {
+                console.log(e.target)
+                // figure out how to filter when clicked
+            })
+        })
+    }
+}
+
 // function renderAsideBar() {
-//     fetch('https://rickandmortyapi.com/api/character/')
+//     fetch('https://rickandmortyapi.com/api/location/')
 //     .then(resp => resp.json())
-//     .then(data => data.results.forEach( data => {
-//         const mainCharLi = document.createElement('li')
-//         mainCharLi.textContent = data.name
-//         mainCharLi.class = 'mainChar'
-//         document.querySelector('#mainCharList').append(mainCharLi)
-//         mainCharLi.addEventListener('click', (e) => {
-//             console.log(e.target)
-//         })
-//     }))
+//     .then(data => {
+//         for(let i=0; i<10;  i++){
+//             const mainLocLi = document.createElement('li')
+//             mainLocLi.textContent = data.results[i].name
+//             console.log(data.results[i].name)
+//             mainLocLi.className = 'mainLoc'
+//             document.querySelector('#mainLocationList').append(mainLocLi)
+//             mainLocLi.addEventListener('click', (e) => {
+//                 console.log(e.target)
+//             })
+//         }
+//     })
 // }
 
 function searchForCharacter () {
@@ -165,7 +198,9 @@ function renderEpisodes(episode){
             .then(res => res.json())
             .then(json => {
                 let episodeName = document.createElement('li')
-                episodeName.textContent = json.name
+                let episodeSpan = document.createElement('span')
+                episodeSpan.textContent = json.name
+                episodeName.append(episodeSpan)
                 document.querySelector('.episode-list').append(episodeName)
             })
         }
@@ -176,7 +211,9 @@ function renderEpisodes(episode){
             .then(json => {
                 let episodeList = document.querySelector('.episode-list')
                 let episodeName = document.createElement('li')
-                episodeName.textContent = json.name
+                let episodeSpan = document.createElement('span')
+                episodeSpan.textContent = json.name
+                episodeName.append(episodeSpan)
                 episodeList.append(episodeName)
             })
         })
