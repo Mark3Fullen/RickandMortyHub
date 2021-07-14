@@ -7,21 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAsideBar();
 })
 
-    // function fetchAPI() {
-    //     fetch('https://rickandmortyapi.com/api/character/')
-    //     .then(res => res.json())
-    //     .then(json => renderCharacters(json.results))
-    // }
-
-    // function renderCharacters(data){
-    //     data.forEach(renderCharacter);
-    //     console.log(data)
-    //     // for (let i=0; i<19; i++) {
-    //     //     num = Math.floor(Math.random() * 200)
-    //     //     renderCharacter(data[num])
-    //     // }
-    // }
-
     function fetchRandoChar() {
         for (i=0; i<19; i++) {
             id = Math.floor(Math.random() * 672)
@@ -33,15 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderCharacter(data) {
         let container = document.querySelector('.card-container')
-        // let card = document.querySelector('.card')
-        // let frame = document.querySelector('.frame')
-        // let img = document.querySelector('#char-pic')
         let card = document.createElement('div')
         let frame = document.createElement('div')
         let img = document.createElement('img')
         let characterName = document.createElement('h2')
-        // let characterUl = document.querySelector('#character-list')
-        // let characterLi = document.createElement('li')
 
         card.className = 'card'
         frame.className = 'frame'
@@ -51,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         img.src = data.image
         characterName.textContent = data.name
 
-        // characterUl.append(characterLi)
         frame.append(characterName, img)
         card.append(frame)
         container.append(card)
@@ -108,8 +87,6 @@ function characterDetail(char) {
     episodes.className = 'episode-list'
     console.log(char.episode)
     renderEpisodes(char.episode)
-    // need to render episodes onto page
-
 
     statusDiv.append(status)
     statusButton.append(statusDiv)
@@ -123,20 +100,6 @@ function characterDetail(char) {
     infoMain.append(locationName, info, episodes)
     infoContainer.append(infoAside, infoMain, commentForm)
 }
-
-// function renderAsideBar() {
-//     fetch('https://rickandmortyapi.com/api/character/')
-//     .then(resp => resp.json())
-//     .then(data => data.results.forEach( data => {
-//         const mainCharLi = document.createElement('li')
-//         mainCharLi.textContent = data.name
-//         mainCharLi.class = 'mainChar'
-//         document.querySelector('#mainCharList').append(mainCharLi)
-//         mainCharLi.addEventListener('click', (e) => {
-//             console.log(e.target)
-//         })
-//     }))
-// }
 
 function searchForCharacter () {
     document.querySelector('#char-form').addEventListener('submit', e => {
