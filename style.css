@@ -139,3 +139,25 @@ img.logo {
     display: inline-block;
     font-size: 16px;
 }
+
+main{
+    width: 100%;
+    padding: 2rem;
+}
+
+aside{
+    padding: 0;
+}
+
+.info-container {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+#mainCharList {
+    float: left;
+    position: relative;
+}

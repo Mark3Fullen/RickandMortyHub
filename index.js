@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Bruh Moment")
     // fetchAPI();
-    fetchRandoChar();
     returnToPage();
     searchForCharacter();
     // renderAsideBar();
@@ -9,21 +8,36 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchRandoLocation();
 })
 
-    function fetchRandoChar() {
-        for (i=0; i<19; i++) {
-            id = Math.floor(Math.random() * 672)
-            fetch(`https://rickandmortyapi.com/api/character/${id}`)
-            .then(res => res.json())
-            .then(renderCharacter)
-        }
+// function fetchAPI() {
+//     fetch('https://rickandmortyapi.com/api/character/')
+//     .then(res => res.json())
+//     .then(json => renderCharacters(json.results))
+// }
+
+    function renderCharacters(data){
+        data.forEach(renderCharacter);
     }
 
-    function renderCharacter(data) {
-        let container = document.querySelector('.card-container')
-        let card = document.createElement('div')
-        let frame = document.createElement('div')
-        let img = document.createElement('img')
-        let characterName = document.createElement('h2')
+function fetchRandoChar() {
+    for (i=0; i<20; i++) {
+        id = Math.floor(Math.random() * 672)
+        fetch(`https://rickandmortyapi.com/api/character/${id}`)
+        .then(res => res.json())
+        .then(renderCharacter)
+    }
+}
+
+function renderCharacter(data) {
+    let container = document.querySelector('.card-container')
+    // let card = document.querySelector('.card')
+    // let frame = document.querySelector('.frame')
+    // let img = document.querySelector('#char-pic')
+    let card = document.createElement('div')
+    let frame = document.createElement('div')
+    let img = document.createElement('img')
+    let characterName = document.createElement('h2')
+    // let characterUl = document.querySelector('#character-list')
+    // let characterLi = document.createElement('li')
 
         card.className = 'card'
         frame.className = 'frame'
@@ -48,15 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    function showCharacterDetail(id){
-        console.log(id)
-        fetch(`https://rickandmortyapi.com/api/character/${id}`)
-        .then(res => res.json())
-        .then(json => {
-            document.querySelector('.card-container').innerHTML = '';
-            characterDetail(json)
-        })
-    }
+function showCharacterDetail(id){
+    console.log(id)
+    fetch(`https://rickandmortyapi.com/api/character/${id}`)
+    .then(res => res.json())
+    .then(json => {
+        document.querySelector('#mainpage').innerHTML = '';
+        characterDetail(json)
+    })
+}
 
 function characterDetail(char) {
     console.log(char)
@@ -205,3 +219,17 @@ function renderEpisodes(episode){
         })
     }
 }
+
+    function searchForCharacter () {
+        document.querySelector('#char-form').addEventListener('submit', e => {
+            document.querySelector('div.card-container').innerHTML = ''
+            e.preventDefault();
+            let character = e.target.nameOfChar.value;
+            console.log(character)
+            fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
+            .then(resp => resp.json())
+            .then(json => {
+                renderCharacters(json.results)
+            })
+        })
+    }
