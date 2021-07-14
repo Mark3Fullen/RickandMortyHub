@@ -1,3 +1,7 @@
+body {
+    background-image: url(https://images.newscientist.com/wp-content/uploads/2020/05/22112120/sagdig_opo0431b_web.jpg)
+}
+
 header{
     background-color: lightslategray;
 }
@@ -51,9 +55,9 @@ img.logo {
 .info-main{
     width: 100%;
     padding: 2rem;
-    background:black;
+    /* background:black; */
     color: white;
-    background-image: url(https://images.newscientist.com/wp-content/uploads/2020/05/22112120/sagdig_opo0431b_web.jpg);
+    /* background-image: url(https://images.newscientist.com/wp-content/uploads/2020/05/22112120/sagdig_opo0431b_web.jpg); */
 }
 
 .info-main p span{
@@ -104,7 +108,7 @@ img.logo {
 
 #mainpage main{
     width: 100%;
-    background-image: url(https://images.newscientist.com/wp-content/uploads/2020/05/22112120/sagdig_opo0431b_web.jpg);
+    /* background-image: url(https://images.newscientist.com/wp-content/uploads/2020/05/22112120/sagdig_opo0431b_web.jpg); */
 }
 
 #mainpage aside{
@@ -140,24 +144,6 @@ img.logo {
     font-size: 16px;
 }
 
-main{
-    width: 100%;
-    padding: 2rem;
-}
-
-aside{
-    padding: 0;
-}
-
-.info-container {
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-#mainCharList {
-    float: left;
-    position: relative;
+#locationDetailPage h1 span {
+    background-color: rgba(119.0, 136.0, 153.0, 0.6);
 }
