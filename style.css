@@ -1,9 +1,23 @@
+header{
+    background-color: lightslategray;
+}
+header h2{
+    padding: 5px;
+}
+#char-form{
+    background-color: lightslategray;
+
+}
 img.logo {
     width: 300px;
     height: auto;
 }
 
 .card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 350px;
     width: 1500 px;
     margin: auto;
     margin-top: 30px;
@@ -12,14 +26,15 @@ img.logo {
 .card {
     float: left;
     width: 350px;
-    margin: auto;
+    margin: 50px;
+    align-items: center;
 }
 
 .frame {
     width: 330px;
     margin: 15px;
     background: black;
-    color: green;
+    color: white;
 }
 
 #char-pic {
@@ -33,23 +48,40 @@ img.logo {
     margin-bottom: 3px;
 }
 
-main{
+.info-main{
     width: 100%;
     padding: 2rem;
+    background:black;
+    color: white;
+    background-image: url(https://images.newscientist.com/wp-content/uploads/2020/05/22112120/sagdig_opo0431b_web.jpg);
 }
 
-aside{
+.info-main p span{
+    background-color: rgba(119.0, 136.0, 153.0, 0.6);
+}
+
+.info-main ul span{
+    background-color: rgba(119.0, 136.0, 153.0, 0.6);
+
+}
+
+.info-main ul li span{
+    background-color: rgba(119.0, 136.0, 153.0, 0.6);
+}
+
+.info-list{
     padding: 0;
     background: black;
-    color: green;
+    color: white;
     text-align: center;
+    margin-top: 0;
 }
 
-aside h3{
+.info-list h3{
     margin: 3px;
 }
 
-aside img{
+.info-list img{
     margin: 10px;
 }
 
@@ -59,13 +91,73 @@ aside img{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
 }
 
-main{
-    background:black;
-    color: green;
+#mainpage{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#mainpage main{
+    width: 100%;
+    background-image: url(https://images.newscientist.com/wp-content/uploads/2020/05/22112120/sagdig_opo0431b_web.jpg);
+}
+
+#mainpage aside{
+    padding: 0px;
+    background-color:lightslategray;
+    margin-top: 0px;
+}
+
+#mainpage ul{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#mainpage ul li{
+    list-style-type: none;
+    padding:8px;
+    font-size: 18px;
+    font-weight: normal;
 }
 
 .spoiler{
     display: none;
+}
+
+#spoilerButton{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+main{
+    width: 100%;
+    padding: 2rem;
+}
+
+aside{
+    padding: 0;
+}
+
+.info-container {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+#mainCharList {
+    float: left;
+    position: relative;
 }

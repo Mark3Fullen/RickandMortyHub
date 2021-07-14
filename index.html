@@ -10,18 +10,23 @@
         <header style='text-align:center'>
             <img src="https://upload.wikimedia.org/wikipedia/en/c/c8/Rick_and_Morty_logo.png" alt="Rick and Morty logo.png" class='logo'>
             <h2>The Rick and Morty Encyclopedia</h2>
+            <div>
+                <form class = 'search-bar' id = 'char-form' style='text-align:center'>
+                    <input type='text' id='name-input' name='nameOfChar' placeholder='Enter character name:'>
+                    <input type='submit' id='search-button' value='Search'>
+                </form>
+            </div>
         </header>
-        <div>
-            <form class = 'search-bar' id = 'char-form' style='text-align:center'>
-                <input type='text' id='name-input' name='nameOfChar' placeholder='Enter character name:'>
-                <input type='submit' id='search-button' value='Search'>
-            </form>
+
+        <div id='mainpage'>
+            <aside>
+                <ul id="mainLocationList">Locations:
+                </ul>
+            </aside>
+            <main>
+                <div class='card-container'></div>
+            </main>
         </div>
-    <aside>
-        <ul id="mainCharList">
-        </ul>
-    </aside>
-        <div class='card-container'></div>
         <div class='info-container'></div>
     </body>
 </html>
