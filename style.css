@@ -4,6 +4,10 @@ img.logo {
 }
 
 .card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 350px;
     width: 1500 px;
     margin: auto;
     margin-top: 30px;
@@ -12,14 +16,15 @@ img.logo {
 .card {
     float: left;
     width: 350px;
-    margin: auto;
+    margin: 50px;
+    align-items: center;
 }
 
 .frame {
     width: 330px;
     margin: 15px;
     background: black;
-    color: green;
+    color: white;
 }
 
 #char-pic {
@@ -41,7 +46,7 @@ main{
 aside{
     padding: 0;
     background: black;
-    color: green;
+    color: white;
     text-align: center;
 }
 
@@ -68,4 +73,15 @@ main{
 
 .spoiler{
     display: none;
+}
+
+#spoilerButton{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
