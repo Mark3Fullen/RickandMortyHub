@@ -63,7 +63,8 @@ function showCharacterDetail(id){
     })
 }
 
-function characterDetail(char){
+function characterDetail(char) {
+    console.log(char)
     let infoContainer = document.querySelector('.info-container')
     let infoAside = document.createElement('aside')
     let infoMain = document.createElement('main')
@@ -191,6 +192,47 @@ function searchForCharacter () {
         })
     })
 }
+
+    function renderAsideBar() {
+        fetch('https://rickandmortyapi.com/api/character/')
+        .then(resp => resp.json())
+        .then(data => data.results.forEach( data => {
+            const mainCharLi = document.createElement('li')
+            mainCharLi.textContent = data.name
+            mainCharLi.class = 'mainChar'
+            document.querySelector('#mainCharList').append(mainCharLi)
+            mainCharLi.addEventListener('click', (e) => {
+                console.log(e.target)
+            })
+        }))
+    }
+
+    function searchForCharacter () {
+        document.querySelector('#char-form').addEventListener('submit', e => {
+            document.querySelector('div.card-container').innerHTML = ''
+            document.querySelector('div.info-container').innerHTML = ''
+            e.preventDefault();
+            let character = e.target.nameOfChar.value;
+            console.log(character)
+            fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
+            .then(resp => resp.json())
+            .then(json => {
+                renderCharacters(json.results)
+            })
+        })
+    }
+// function renderAsideBar(data) {
+//     for (let i=0; i<19; i++) {
+//         const mainCharLi = document.createElement('li')
+//         mainCharLi.textContent = data[i].name
+//         mainCharLi.class = 'mainChar'
+//         document.querySelector('#mainCharList').append(mainCharLi)
+//         mainCharLi.addEventListener('click', (e) => {
+//             document.querySelector('.info-container').innerHTML = ''
+//             showCharacterDetail(data[i].id)
+//         })
+//     }
+// }
 
 function revealSpoiler(statusButton){
     statusButton.addEventListener('click', () => {
