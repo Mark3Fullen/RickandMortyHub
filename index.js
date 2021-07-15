@@ -164,7 +164,7 @@ function renderLocDetails(data) {
         fetch(resident)
         .then(resp => resp.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             renderCharacter(data)
         })
     })
@@ -175,11 +175,13 @@ function renderLocDetails(data) {
 function searchForCharacter () {
     document.querySelector('#char-form').addEventListener('submit', e => {
         e.preventDefault();
+        let character = e.target.nameOfChar.value
+        if(document.querySelector('#locationDetailPage h1')) {
+            document.querySelector('#locationDetailPage h1').innerHTML = '';
+        }
         document.querySelector('div.info-container').innerHTML = ''
-        let character = e.target.nameOfChar.value;
-        debugger
-        console.log(character)
-        debugger
+        document.querySelector('.card-container').innerHTML = ''
+        document.querySelector('div.location-div').innerHTML = ''
         fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
         .then(resp => resp.json())
         .then(json => {
