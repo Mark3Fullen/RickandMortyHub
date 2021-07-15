@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Bruh Moment")
     returnToPage();
     searchForCharacter();
-    // searchForCharacter();
-    // renderAsideBar();
     fetchRandoChar();
     fetchRandoLocation();
 })
@@ -118,6 +116,8 @@ function characterDetail(char) {
     infoMain.append(locationName, info, episodes)
     infoContainer.append(infoAside, infoMain)
 
+} 
+
 function fetchRandoLocation() {
     for (i=0; i<10; i++) {
         id = Math.floor(Math.random() * 108)
@@ -131,7 +131,6 @@ function fetchRandoLocation() {
             mainLocLi.addEventListener('click', () => {
                 document.querySelector('#mainpage').innerHTML = '';
                 renderLocDetails(data);
-                // figure out how to filter when clicked
             })
         })
     }
@@ -166,23 +165,6 @@ function renderLocDetails(data) {
 
     locDiv.className = 'location-div'
 }
-
-// function renderAsideBar() {
-//     fetch('https://rickandmortyapi.com/api/location/')
-//     .then(resp => resp.json())
-//     .then(data => {
-//         for(let i=0; i<10;  i++){
-//             const mainLocLi = document.createElement('li')
-//             mainLocLi.textContent = data.results[i].name
-//             console.log(data.results[i].name)
-//             mainLocLi.className = 'mainLoc'
-//             document.querySelector('#mainLocationList').append(mainLocLi)
-//             mainLocLi.addEventListener('click', (e) => {
-//                 console.log(e.target)
-//             })
-//         }
-//     })
-// }
 
 function searchForCharacter () {
     document.querySelector('#char-form').addEventListener('submit', e => {
@@ -241,17 +223,3 @@ function renderEpisodes(episode){
         })
     }
 }
-
-// function searchForCharacter () {
-//     document.querySelector('#char-form').addEventListener('submit', e => {
-//         document.querySelector('div.card-container').innerHTML = ''
-//         e.preventDefault();
-//         let character = e.target.nameOfChar.value;
-//         console.log(character)
-//         fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
-//         .then(resp => resp.json())
-//         .then(json => {
-//             renderCharacters(json.results)
-//         })
-//     })
-// }
