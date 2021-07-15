@@ -1,19 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Bruh Moment")
-    // fetchAPI();
     returnToPage();
     searchForCharacter();
-    // searchForCharacter();
-    // renderAsideBar();
     fetchRandoChar();
     fetchRandoLocation();
 })
-
-// function fetchAPI() {
-//     fetch('https://rickandmortyapi.com/api/character/')
-//     .then(res => res.json())
-//     .then(json => renderCharacters(json.results))
-// }
 
     function renderCharacters(data){
         data.forEach(renderCharacter);
@@ -30,15 +21,10 @@ function fetchRandoChar() {
 
 function renderCharacter(data) {
     let container = document.querySelector('.card-container')
-    // let card = document.querySelector('.card')
-    // let frame = document.querySelector('.frame')
-    // let img = document.querySelector('#char-pic')
     let card = document.createElement('div')
     let frame = document.createElement('div')
     let img = document.createElement('img')
     let characterName = document.createElement('h2')
-    // let characterUl = document.querySelector('#character-list')
-    // let characterLi = document.createElement('li')
 
         card.className = 'card'
         frame.className = 'frame'
@@ -48,7 +34,6 @@ function renderCharacter(data) {
         img.src = data.image
         characterName.textContent = data.name
 
-        // characterUl.append(characterLi)
         frame.append(characterName, img)
         card.append(frame)
         container.append(card)
@@ -65,12 +50,15 @@ function renderCharacter(data) {
     }
 
 function showCharacterDetail(id){
+    if(document.querySelector('#locationDetailPage h1')) {
+        document.querySelector('#locationDetailPage h1').innerHTML = '';
+    }
     console.log(id)
     fetch(`https://rickandmortyapi.com/api/character/${id}`)
     .then(res => res.json())
     .then(json => {
-        document.querySelector('#mainpage').innerHTML = '';
-        document.querySelector('#locationDetailPage').innerHTML = '';
+        document.querySelector('#mainpage aside').innerHTML = '';
+        document.querySelector('.card-container').innerHTML = '';
         characterDetail(json)
     })
 }
@@ -86,6 +74,8 @@ function characterDetail(char) {
     let statusButton = document.createElement('button')
     let img = document.createElement('img')
     let info = document.createElement('div')
+    let originName = document.createElement('p')
+    let originSpan = document.createElement('span')
     let locationName = document.createElement('p')
     let locationSpan = document.createElement('span')
     let gender = document.createElement('p')
@@ -102,7 +92,8 @@ function characterDetail(char) {
     statusButton.textContent = 'Show Spoiler'
     statusButton.id = 'spoilerButton'
     revealSpoiler(statusButton)
-    locationSpan.textContent = `Location: ${char.location.name}`
+    originSpan.textContent = `Origin: ${char.origin.name}`
+    locationSpan.textContent = `Last known location: ${char.location.name}`
     genderSpan.textContent = `Gender: ${char.gender}`
     speciesSpan.textContent = `Species: ${char.species}`
     episodesSpan.textContent = 'Episodes seen in:'
@@ -118,6 +109,7 @@ function characterDetail(char) {
     infoAside.append(name, img, statusButton)
     gender.append(genderSpan)
     species.append(speciesSpan)
+    originName.append(originSpan)
     locationName.append(locationSpan)
     episodes.append(episodesSpan)
     info.append(gender, species)
@@ -128,7 +120,7 @@ function characterDetail(char) {
         type.append(typeSpan)
         info.append(gender, species, type)
     }
-    infoMain.append(locationName, info, episodes)
+    infoMain.append(originName, locationName, info, episodes)
     infoContainer.append(infoAside, infoMain)
 }
 
@@ -143,9 +135,9 @@ function fetchRandoLocation() {
             mainLocLi.className = 'mainLoc'
             document.querySelector('#mainLocationList').append(mainLocLi)
             mainLocLi.addEventListener('click', () => {
-                document.querySelector('#mainpage').innerHTML = '';
+                document.querySelector('#mainpage aside').innerHTML = '';
+                document.querySelector('#mainpage main').innerHTML = '';
                 renderLocDetails(data);
-                // figure out how to filter when clicked
             })
         })
     }
@@ -181,28 +173,10 @@ function renderLocDetails(data) {
     locDiv.className = 'location-div'
 }
 
-// function renderAsideBar() {
-//     fetch('https://rickandmortyapi.com/api/location/')
-//     .then(resp => resp.json())
-//     .then(data => {
-//         for(let i=0; i<10;  i++){
-//             const mainLocLi = document.createElement('li')
-//             mainLocLi.textContent = data.results[i].name
-//             console.log(data.results[i].name)
-//             mainLocLi.className = 'mainLoc'
-//             document.querySelector('#mainLocationList').append(mainLocLi)
-//             mainLocLi.addEventListener('click', (e) => {
-//                 console.log(e.target)
-//             })
-//         }
-//     })
-// }
-
 function searchForCharacter () {
     document.querySelector('#char-form').addEventListener('submit', e => {
-        document.querySelector('div.card-container').innerHTML = ''
-        document.querySelector('div.info-container').innerHTML = ''
         e.preventDefault();
+        document.querySelector('div.info-container').innerHTML = ''
         let character = e.target.nameOfChar.value;
         debugger
         console.log(character)
@@ -210,9 +184,10 @@ function searchForCharacter () {
         fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
         .then(resp => resp.json())
         .then(json => {
-            renderCharacters(json.results)
+            console.log(json)
+            document.querySelector('#char-form')
+            json.results.forEach(char => renderCharacter(char))
         })
-        document.querySelector('#char-form').reset();
     })
 }
 
@@ -296,17 +271,3 @@ function renderEpisodes(episode){
         })
     }
 }
-
-// function searchForCharacter () {
-//     document.querySelector('#char-form').addEventListener('submit', e => {
-//         document.querySelector('div.card-container').innerHTML = ''
-//         e.preventDefault();
-//         let character = e.target.nameOfChar.value;
-//         console.log(character)
-//         fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
-//         .then(resp => resp.json())
-//         .then(json => {
-//             renderCharacters(json.results)
-//         })
-//     })
-// }

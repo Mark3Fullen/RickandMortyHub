@@ -61,16 +61,18 @@ img.logo {
 }
 
 .info-main p span{
-    background-color: rgba(119.0, 136.0, 153.0, 0.6);
+    background-color: rgba(119.0, 136.0, 153.0, 0.8);
+    font-size: 25px;
 }
 
 .info-main ul span{
-    background-color: rgba(119.0, 136.0, 153.0, 0.6);
-
+    background-color: rgba(119.0, 136.0, 153.0, 0.8);
+    font-size: 25px;
 }
 
 .info-main ul li span{
-    background-color: rgba(119.0, 136.0, 153.0, 0.6);
+    background-color: rgba(119.0, 136.0, 153.0, 0.8);
+    font-size: 25px;
 }
 
 .info-list{
