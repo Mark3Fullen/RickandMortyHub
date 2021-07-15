@@ -92,7 +92,7 @@ function characterDetail(char){
     statusButton.id = 'spoilerButton'
     revealSpoiler(statusButton)
     originSpan.textContent = `Origin: ${char.origin.name}`
-    locationSpan.textContent = `Location: ${char.location.name}`
+    locationSpan.textContent = `Last known location: ${char.location.name}`
     genderSpan.textContent = `Gender: ${char.gender}`
     speciesSpan.textContent = `Species: ${char.species}`
     episodesSpan.textContent = 'Episodes seen in:'
