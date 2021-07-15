@@ -85,6 +85,8 @@ function characterDetail(char){
     let statusButton = document.createElement('button')
     let img = document.createElement('img')
     let info = document.createElement('div')
+    let originName = document.createElement('p')
+    let originSpan = document.createElement('span')
     let locationName = document.createElement('p')
     let locationSpan = document.createElement('span')
     let gender = document.createElement('p')
@@ -101,7 +103,8 @@ function characterDetail(char){
     statusButton.textContent = 'Show Spoiler'
     statusButton.id = 'spoilerButton'
     revealSpoiler(statusButton)
-    locationSpan.textContent = `Location: ${char.location.name}`
+    originSpan.textContent = `Origin: ${char.origin.name}`
+    locationSpan.textContent = `Last known location: ${char.location.name}`
     genderSpan.textContent = `Gender: ${char.gender}`
     speciesSpan.textContent = `Species: ${char.species}`
     episodesSpan.textContent = 'Episodes seen in:'
@@ -117,6 +120,7 @@ function characterDetail(char){
     infoAside.append(name, img, statusButton)
     gender.append(genderSpan)
     species.append(speciesSpan)
+    originName.append(originSpan)
     locationName.append(locationSpan)
     episodes.append(episodesSpan)
     info.append(gender, species)
@@ -127,7 +131,7 @@ function characterDetail(char){
         type.append(typeSpan)
         info.append(gender, species, type)
     }
-    infoMain.append(locationName, info, episodes)
+    infoMain.append(originName, locationName, info, episodes)
     infoContainer.append(infoAside, infoMain)
 }
 
