@@ -50,12 +50,15 @@ function renderCharacter(data) {
     }
 
 function showCharacterDetail(id){
+    if(document.querySelector('#locationDetailPage h1')) {
+        document.querySelector('#locationDetailPage h1').innerHTML = '';
+    }
     console.log(id)
     fetch(`https://rickandmortyapi.com/api/character/${id}`)
     .then(res => res.json())
     .then(json => {
-        document.querySelector('#mainpage').innerHTML = '';
-        document.querySelector('#locationDetailPage').innerHTML = '';
+        document.querySelector('#mainpage aside').innerHTML = '';
+        document.querySelector('.card-container').innerHTML = '';
         characterDetail(json)
     })
 }
@@ -71,6 +74,8 @@ function characterDetail(char) {
     let statusButton = document.createElement('button')
     let img = document.createElement('img')
     let info = document.createElement('div')
+    let originName = document.createElement('p')
+    let originSpan = document.createElement('span')
     let locationName = document.createElement('p')
     let locationSpan = document.createElement('span')
     let gender = document.createElement('p')
@@ -87,7 +92,8 @@ function characterDetail(char) {
     statusButton.textContent = 'Show Spoiler'
     statusButton.id = 'spoilerButton'
     revealSpoiler(statusButton)
-    locationSpan.textContent = `Location: ${char.location.name}`
+    originSpan.textContent = `Origin: ${char.origin.name}`
+    locationSpan.textContent = `Last known location: ${char.location.name}`
     genderSpan.textContent = `Gender: ${char.gender}`
     speciesSpan.textContent = `Species: ${char.species}`
     episodesSpan.textContent = 'Episodes seen in:'
@@ -103,6 +109,7 @@ function characterDetail(char) {
     infoAside.append(name, img, statusButton)
     gender.append(genderSpan)
     species.append(speciesSpan)
+    originName.append(originSpan)
     locationName.append(locationSpan)
     episodes.append(episodesSpan)
     info.append(gender, species)
@@ -113,10 +120,10 @@ function characterDetail(char) {
         type.append(typeSpan)
         info.append(gender, species, type)
     }
-    infoMain.append(locationName, info, episodes)
+    infoMain.append(originName, locationName, info, episodes)
     infoContainer.append(infoAside, infoMain)
 
-} 
+}
 
 function fetchRandoLocation() {
     for (i=0; i<10; i++) {
@@ -129,7 +136,8 @@ function fetchRandoLocation() {
             mainLocLi.className = 'mainLoc'
             document.querySelector('#mainLocationList').append(mainLocLi)
             mainLocLi.addEventListener('click', () => {
-                document.querySelector('#mainpage').innerHTML = '';
+                document.querySelector('#mainpage aside').innerHTML = '';
+                document.querySelector('#mainpage main').innerHTML = '';
                 renderLocDetails(data);
             })
         })
@@ -168,9 +176,8 @@ function renderLocDetails(data) {
 
 function searchForCharacter () {
     document.querySelector('#char-form').addEventListener('submit', e => {
-        document.querySelector('div.card-container').innerHTML = ''
-        document.querySelector('div.info-container').innerHTML = ''
         e.preventDefault();
+        document.querySelector('div.info-container').innerHTML = ''
         let character = e.target.nameOfChar.value;
         debugger
         console.log(character)
@@ -178,9 +185,10 @@ function searchForCharacter () {
         fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
         .then(resp => resp.json())
         .then(json => {
-            renderCharacters(json.results)
+            console.log(json)
+            document.querySelector('#char-form')
+            json.results.forEach(char => renderCharacter(char))
         })
-        document.querySelector('#char-form').reset();
     })
 }
 
