@@ -59,7 +59,6 @@ function showCharacterDetail(id){
     if(document.querySelector('#locationDetailPage h1')) {
         document.querySelector('#locationDetailPage h1').innerHTML = '';
     }
-    console.log(id)
     fetch(`https://rickandmortyapi.com/api/character/${id}`)
     .then(res => res.json())
     .then(json => {
@@ -71,7 +70,6 @@ function showCharacterDetail(id){
 
 //This function is called once the clicked charatcer is successfully fetched and displays all the information for that character
 function characterDetail(char) {
-    console.log(char)
     let infoContainer = document.querySelector('.info-container')
     let infoAside = document.createElement('aside')
     let infoMain = document.createElement('main')
@@ -107,7 +105,6 @@ function characterDetail(char) {
     episodes.className = 'episode-list'
     infoAside.className = 'info-list'
     infoMain.className = 'info-main'
-    console.log(char.episode)
     renderEpisodes(char.episode)
 
 
@@ -160,7 +157,6 @@ function renderLocDetails(data) {
     let locationSpan = document.createElement('span')
     let mainDiv = document.createElement('div')
     mainDiv.className = 'card-container'
-    console.log(data.name)
     locationSpan.textContent = `Characters Seen on ${data.name}`
     location.style.textAlign = 'center'
     location.append(locationSpan)
@@ -195,7 +191,6 @@ function searchForCharacter () {
         fetch(`https://rickandmortyapi.com/api/character/?name=${character}`)
         .then(resp => resp.json())
         .then(json => {
-            console.log(json)
             document.querySelector('#char-form').reset();
             json.results.forEach(char => renderCharacter(char))
         })
