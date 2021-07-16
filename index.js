@@ -1,17 +1,19 @@
+//This event listener calls all the functions that make the website only when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Bruh Moment")
     returnToPage();
     searchForCharacter();
     fetchRandoChar();
     fetchRandoLocation();
 })
 
-    function renderCharacters(data){
-        data.forEach(renderCharacter);
-    }
+//Runs a forEach loop on the data sent from fetchRandoChar function
+function renderCharacters(data){
+    data.forEach(renderCharacter);
+}
 
+//Fethces 12 random characters to display on the 'Home' page and calls the renderCharacter function after it gets a response
 function fetchRandoChar() {
-    for (i=0; i<20; i++) {
+    for (i=0; i<12; i++) {
         id = Math.floor(Math.random() * 672)
         fetch(`https://rickandmortyapi.com/api/character/${id}`)
         .then(res => res.json())
@@ -19,6 +21,7 @@ function fetchRandoChar() {
     }
 }
 
+//Renders the 12 random characters to the screen and puts them in cards.
 function renderCharacter(data) {
     let container = document.querySelector('.card-container')
     let card = document.createElement('div')
@@ -26,29 +29,32 @@ function renderCharacter(data) {
     let img = document.createElement('img')
     let characterName = document.createElement('h2')
 
-        card.className = 'card'
-        frame.className = 'frame'
-        img.id = 'char-pic'
-        characterName.id = 'character-name'
+    card.className = 'card'
+    frame.className = 'frame'
+    img.id = 'char-pic'
+    characterName.id = 'character-name'
 
-        img.src = data.image
-        characterName.textContent = data.name
+    img.src = data.image
+    characterName.textContent = data.name
 
-        frame.append(characterName, img)
-        card.append(frame)
-        container.append(card)
+    frame.append(characterName, img)
+    card.append(frame)
+    container.append(card)
 
-        card.addEventListener('click', () => showCharacterDetail(data.id))
+    //Adds an event listener to each character card and waits for a click event
+    card.addEventListener('click', () => showCharacterDetail(data.id))
 
-    }
+}
 
-    function returnToPage(){
-        let title = document.querySelector('.logo')
-        title.addEventListener('click', () => {
-            window.location.reload()
-        })
-    }
+//Refreshes the page once the Logo is clicked
+function returnToPage(){
+    let title = document.querySelector('.logo')
+    title.addEventListener('click', () => {
+        window.location.reload()
+    })
+}
 
+//This function is called once a charatcer card is selected and will fetch that individual character from the API. It will also clear the DOM
 function showCharacterDetail(id){
     if(document.querySelector('#locationDetailPage h1')) {
         document.querySelector('#locationDetailPage h1').innerHTML = '';
@@ -63,6 +69,7 @@ function showCharacterDetail(id){
     })
 }
 
+//This function is called once the clicked charatcer is successfully fetched and displays all the information for that character
 function characterDetail(char) {
     console.log(char)
     let infoContainer = document.querySelector('.info-container')
@@ -124,6 +131,7 @@ function characterDetail(char) {
     infoContainer.append(infoAside, infoMain)
 }
 
+//This function fetches 10 random loactions seen on Rick and Morty and will then display those locations to a side bar on the main page. It adds an event listener to each Li
 function fetchRandoLocation() {
     for (i=0; i<10; i++) {
         id = Math.floor(Math.random() * 108)
@@ -143,6 +151,7 @@ function fetchRandoLocation() {
     }
 }
 
+//Once a location is clicked, the DOM will be cleared and a list of Characters that showed up on that location will be diplayed.
 function renderLocDetails(data) {
     const residents = data.residents;
     let locDiv = document.createElement('div')
@@ -172,6 +181,7 @@ function renderLocDetails(data) {
     locDiv.className = 'location-div'
 }
 
+//A search function that will display all the characters that contain the string inputted. IT IS NOT AN EXACT MATCH SEARCH.
 function searchForCharacter () {
     document.querySelector('#char-form').addEventListener('submit', e => {
         e.preventDefault();
@@ -191,20 +201,7 @@ function searchForCharacter () {
     })
 }
 
-    function renderAsideBar() {
-        fetch('https://rickandmortyapi.com/api/character/')
-        .then(resp => resp.json())
-        .then(data => data.results.forEach( data => {
-            const mainCharLi = document.createElement('li')
-            mainCharLi.textContent = data.name
-            mainCharLi.class = 'mainChar'
-            document.querySelector('#mainCharList').append(mainCharLi)
-            mainCharLi.addEventListener('click', (e) => {
-                console.log(e.target)
-            })
-        }))
-    }
-
+//Adds an event listener to the status info. If clicked, will reveal if the character is dead, alive, or unknown
 function revealSpoiler(statusButton){
     statusButton.addEventListener('click', () => {
         let spoilerButton = document.querySelector('.spoiler')
@@ -216,6 +213,7 @@ function revealSpoiler(statusButton){
     })
 }
 
+//Renders the first 5 episodes the character appeared in. If they did not appear in five episodes, it will display ALL of the episodes they appeared in
 function renderEpisodes(episode){
     if (episode.length > 5){
         for (let i=0; i<5; i++){
